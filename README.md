@@ -22,8 +22,60 @@ security-database-landscape/
 ├── agent_osint_dns.md             # OSINT, passive DNS, WHOIS history (70 operators)
 ├── agent_malware_repos.md         # Malware sample repositories & sandboxes (49 operators)
 ├── agent_vuln_databases.md        # Vulnerability databases (55+ operators)
-└── agent_darkweb_monitoring.md    # Dark web monitoring (71 operators)
+├── agent_darkweb_monitoring.md    # Dark web monitoring (71 operators)
+├── extract_operators.py           # Script to extract & categorize operator names
+└── extracted/                     # Generated output from extract_operators.py
+    └── operators.md               # Extracted names (markdown, default)
+    └── operators.csv              # Extracted names (CSV, optional)
+    └── operators.json             # Extracted names (JSON, optional)
+    └── operators.txt              # Extracted names (plain text, optional)
 ```
+
+---
+
+## Extract Operator Names
+
+The `extract_operators.py` script parses all 7 research files and outputs a clean list of operator names, deduplicated and categorized — including a **multi-category section** that identifies operators appearing in more than one category and groups them by combination.
+
+### Usage
+
+```bash
+# Default: markdown output → extracted/operators.md
+python3 extract_operators.py
+
+# Choose format
+python3 extract_operators.py --format csv
+python3 extract_operators.py --format json
+python3 extract_operators.py --format txt
+
+# Custom output directory
+python3 extract_operators.py --output-dir results
+
+# Run from a different directory
+python3 extract_operators.py --repo-dir /path/to/security-database-landscape
+```
+
+### Output Structure
+
+**Single-category sections** — operators unique to one category, alphabetically sorted.
+
+**Multi-category section** — operators appearing in 2+ categories, grouped by their combination:
+
+```
+## Multi-Category Operators (N operators)
+
+### Threat Intelligence + Malware Repositories (4)
+- VirusTotal
+- ...
+
+### Threat Intelligence + OSINT / Passive DNS (3)
+- Shodan
+- ...
+```
+
+### Requirements
+
+Python 3.10+ (no external dependencies — standard library only).
 
 ---
 
